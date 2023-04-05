@@ -39,7 +39,9 @@ print("X_train.shape=",X.shape)
 
 
 # In[ ]:
-
+import sys
+print(sys.getrecursionlimit())
+sys.setrecursionlimit(100000)
 
 from sklearn.preprocessing import Normalizer
 from sklearn.preprocessing import StandardScaler
