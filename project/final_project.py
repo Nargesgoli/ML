@@ -37,10 +37,9 @@ warnings.filterwarnings('ignore')
 
 # In[2]:
 
-
-train_set = pd.read_csv("/Users/nrgsg/Desktop/courses/CSE-546/final project/VMMR_subset_images/train_features.csv", header=None)
+train_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_features.csv", header=None)
 x_train = np.array(train_set)
-validation_set = pd.read_csv("/Users/nrgsg/Desktop/courses/CSE-546/final project/VMMR_subset_images/train_data.csv", header=None)
+validation_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_data.csv", header=None)
 Y_train = np.array(validation_set[list(validation_set.columns[-1:])])
 Y_train = np.array(Y_train).reshape((-1))
 
