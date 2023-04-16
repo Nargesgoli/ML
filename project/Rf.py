@@ -91,7 +91,7 @@ print("Distance feature shape: {}".format(distance_features.shape))
 # In[ ]:
 
 
-param_grid = {'n_estimators': [1, 10, 100,200,500],
+param_grid = {'n_estimators': [1, 10, 100,200,500,600,700,1000,1500],
               'max_depth':[1,2,3,4,5,6,10,15,20,50,100,1000],
               'max_features':[1,2,3,4,5,6,7,8]} 
 grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=4)
