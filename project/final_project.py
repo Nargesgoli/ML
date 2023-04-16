@@ -32,6 +32,7 @@ warnings.simplefilter('ignore', FutureWarning)
 warnings.simplefilter('ignore', RuntimeWarning)
 from sklearn.exceptions import ConvergenceWarning
 ConvergenceWarning('ignore')
+warnings.filterwarnings('ignore')
 
 
 # In[2]:
@@ -54,10 +55,10 @@ print("validation_set=",Y_train.shape)
 # In[4]:
 
 
-plt.figure(figsize=(30, 20))
-plt.boxplot(x_train)
+# plt.figure(figsize=(30, 20))
+# plt.boxplot(x_train)
 # plt.xticks(range(1,999),list(X_testt.columns[1:-1]), rotation=90)
-plt.show()
+# plt.show()
 
 
 # In[5]:
@@ -95,7 +96,7 @@ plt.plot(np.cumsum(pca.explained_variance_ratio_))
 # plt.bar(range(0,len(pca.explained_variance_ratio_)), pca.explained_variance_ratio_, alpha=0.5, align='center', label='Individual explained variance')
 plt.xlabel('number of components')
 plt.ylabel('cumulative explained variance');
-plt.show()
+# plt.show()
 print("cumulative explained variance[200]:",np.cumsum(pca.explained_variance_ratio_)[199])
 print("cumulative explained variance[300]:",np.cumsum(pca.explained_variance_ratio_)[299])
 
@@ -176,7 +177,7 @@ train_accs_clf3= []
 for n in n_est:
     val_acc_clf3  = []
     train_acc_clf3= []
-    clf3= RandomForestClassifier (n_estimators=n, random_state=2)
+    clf3= GradientBoostingClassifier (n_estimators=n, random_state=2)
     cv_results_clf3 = cross_validate(clf3, X_trainval, y_trainval, cv=4, return_train_score=True)
     train_accs_clf3.append(np.round(100*np.mean(cv_results_clf3["train_score"]),2))
     val_accs_clf3.append(np.round(100*np.mean(cv_results_clf3["test_score"]),2))
@@ -197,7 +198,7 @@ plt.xlabel("n_estimators")
 plt.ylabel("gbrt_Average Accuracy")
 # plt.ylim(bottom=75, top=100)
 plt.legend()
-
+plt.show()
 
 # In[ ]:
 
