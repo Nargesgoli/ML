@@ -33,6 +33,8 @@ warnings.simplefilter('ignore', FutureWarning)
 warnings.simplefilter('ignore', RuntimeWarning)
 from sklearn.exceptions import ConvergenceWarning
 ConvergenceWarning('ignore')
+import warnings
+warnings.filterwarnings('ignore')
 
 
 # In[ ]:
@@ -95,8 +97,8 @@ param_grid = {'n_estimators': [1, 10, 100,200,500],
 grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=4)
 grid_search.fit(X_train, y_train)
 print("Test set score: {:.2f}".format(grid_search.score(X_valid, y_valid)))
-
-
+print("Best parameters: {}".format(grid_search.best_params_))
+print("Best cross-validation score: {:.2f}".format(grid_search.best_score_))
 # In[ ]:
 
 
