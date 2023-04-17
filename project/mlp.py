@@ -52,6 +52,8 @@ validation_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_data.
 Y_train = np.array(validation_set[list(validation_set.columns[-1:])])
 Y_train = np.array(Y_train).reshape((-1))
 X_trainval, X_test, y_trainval, y_test = train_test_split (x_train, Y_train, random_state=0)
+X_trainn, X_testt, y_trainn, y_testt = train_test_split (x_train, Y_train, random_state=0) 
+
 
 
 # In[ ]:
