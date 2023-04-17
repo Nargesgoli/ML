@@ -3,10 +3,14 @@
 
 # In[ ]:
 
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.metrics import make_scorer, roc_auc_score
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score 
+from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import StandardScaler
@@ -18,6 +22,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
+from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import make_pipeline
 from matplotlib import cm
 from sklearn.metrics import silhouette_samples
 from sklearn.metrics import silhouette_score
@@ -33,7 +39,6 @@ warnings.simplefilter('ignore', FutureWarning)
 warnings.simplefilter('ignore', RuntimeWarning)
 from sklearn.exceptions import ConvergenceWarning
 ConvergenceWarning('ignore')
-import warnings
 warnings.filterwarnings('ignore')
 
 
@@ -45,8 +50,8 @@ x_train = np.array(train_set)
 validation_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_data.csv", header=None)
 Y_train = np.array(validation_set[list(validation_set.columns[-1:])])
 Y_train = np.array(Y_train).reshape((-1))
-X_trainval, X_test, y_trainval, y_test = train_test_split (x_train, Y_train, random_state=0) 
-
+X_trainval, X_test, y_trainval, y_test = train_test_split (x_train, Y_train, random_state=0)
+X_trainn, X_testt, y_trainn, y_testt = train_test_split (x_train, Y_train, random_state=0) 
 
 
 # In[ ]:
@@ -69,37 +74,16 @@ print("X_valid.shape:",X_valid.shape)
 # In[ ]:
 
 
-## pca (n_components=200)
-pca1 = PCA(n_components=200)
-X_train_pca = pca1.fit_transform(X_trainval)
-
-print("pca.components_.shape: {}".format(pca1.components_.shape))
-
-
-# In[ ]:
-
-
-## data mapping
-kmeans = KMeans(n_clusters=200, random_state=0)
-kmeans.fit(X_trainval)
-# y_pred_map = kmeans.predict(X_trainval)
-distance_features = kmeans.transform(X_trainval)
-print("Actual feature shape: {}".format(X_trainval.shape))
-print("Distance feature shape: {}".format(distance_features.shape))
-
-
-# In[ ]:
-
-
-param_grid = {'n_estimators': [1, 10, 100,200,500,600,700,1000,1500],
-              'max_depth':[1,2,3,4,5,6,10,15,20,50,100,1000],
-              'max_features':[1,2,3,4,5,6,7,8]} 
-grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=4)
-grid_search.fit(X_train, y_train)
-print("Test set score: {:.2f}".format(grid_search.score(X_valid, y_valid)))
-print("Best parameters: {}".format(grid_search.best_params_))
-print("Best cross-validation score: {:.2f}".format(grid_search.best_score_))
-# In[ ]:
+pipe_clf3 = make_pipeline(MinMaxScaler(), RandomForestClassifier()) 
+# n_est = [2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]
+param_grid = [{'randomforestclassifier__n_estimators':[3,5,10,12,15,20,25,50,150,100,200,500,1000],
+               'randomforestclassifier__max_depth':[3,5,6,10,12,15,20,50,100],
+               'randomforestclassifier__max_features':[4,5,6,7,8,10,12,15,20,50,100],
+               'randomforestclassifier__max_leaf_nodes':[2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]}]
+gs = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='accuracy', cv=4, refit=True)
+gs = gs.fit(X_trainn, y_trainn)
+print("best score:", gs.best_score_) 
+print(gs.best_params_)
 
 
 
