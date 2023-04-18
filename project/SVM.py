@@ -80,10 +80,15 @@ pipe_clf5 = make_pipeline(MinMaxScaler(), SVC (random_state=0))
 # pipe_clf5 = make_pipeline(StandardScaler(), SVC) 
 param_range = [ 0.001, 0.01, 0.1, 1.0,5, 10.0, 100.0]
 param_grid = [
-              {'svc__C': param_range, 'svc__gamma': param_range, 'svc__kernel': ['rbf']}]
+              {'svc__C': [0.001,0.1,1,5,10,50,100,500,1000], 'svc__gamma': [0.00001,0.0001,0.001,0.1,1,10,50], 'svc__kernel': ['rbf']}]
 gs = GridSearchCV(pipe_clf5, param_grid=param_grid, scoring='f1_macro', cv=4, refit=True, return_train_score=True)
 gs = gs.fit(X_trainn, y_trainn)
 print("Accuracy on validation set :",gs.best_score_) 
 print(gs.best_params_)
+results5 = pd.DataFrame(gs5.cv_results_)
+scores5 = np.array(results5.mean_test_score).reshape(7, 7) 
+mglearn.tools.heatmap(scores5, xlabel='svc__gamma',
+    xticklabels=param_grid[0]['svc__gamma'],
+    ylabel='svc__C', yticklabels=param_grid[0]['svc__C'], cmap="viridis")
 
 
