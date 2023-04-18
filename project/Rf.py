@@ -74,7 +74,7 @@ print("X_valid.shape:",X_valid.shape)
 # In[ ]:
 
 
-pipe_clf3 = make_pipeline(MinMaxScaler(), RandomForestClassifier(random_state=0)) 
+pipe_clf3 = make_pipeline(MinMaxScaler(), RandomForestClassifier()) 
 # n_est = [2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]
 param_grid = [{
 #                 'randomforestclassifier__n_estimators':[15,20],
