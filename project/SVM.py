@@ -85,9 +85,9 @@ gs = GridSearchCV(pipe_clf5, param_grid=param_grid, scoring='f1_macro', cv=4, re
 gs = gs.fit(X_trainn, y_trainn)
 print("Accuracy on validation set :",gs.best_score_) 
 print(gs.best_params_)
-results5 = pd.DataFrame(gs5.cv_results_)
-scores5 = np.array(results5.mean_test_score).reshape(7, 7) 
-mglearn.tools.heatmap(scores5, xlabel='svc__gamma',
+results = pd.DataFrame(gs.cv_results_)
+scores = np.array(results.mean_test_score).reshape(7, 7) 
+mglearn.tools.heatmap(scores, xlabel='svc__gamma',
     xticklabels=param_grid[0]['svc__gamma'],
     ylabel='svc__C', yticklabels=param_grid[0]['svc__C'], cmap="viridis")
 plt.show()
