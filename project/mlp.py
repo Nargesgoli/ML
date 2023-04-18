@@ -68,7 +68,7 @@ scaler.fit(X_trainval)
 # X_train = scaler.transform (X_train)
 X_trainval = scaler.transform (X_trainval)
 X_test = scaler.transform (X_test)
-X_train, X_valid, y_train, y_valid = train_test_split (X_trainval, y_trainval, random_state=1)
+X_train, X_valid, y_train, y_valid = train_test_split (X_trainval, y_trainval, random_state=1,test_size=0.1)
 print("X_train.shape:",X_train.shape)
 print("X_valid.shape:",X_valid.shape)
 
@@ -78,9 +78,9 @@ print("X_valid.shape:",X_valid.shape)
 
 pipe_clf4 = make_pipeline(MinMaxScaler(), MLPClassifier()) 
 # n_est = [2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]
-param_grid = [{'mlpclassifier__hidden_layer_sizes':[5,10,15,20,25,50,75,100,200,500,[3,3],[3,3,3],[5,5],[5,5,5],[10,10],[10,10,10]],
+param_grid = [{'mlpclassifier__hidden_layer_sizes':[5,10,15,20,25,50,75,100,200,500,[3,3],[3,3,3],[5,5],[5,5,5],[10,10]],
 #                'mlpclassifier__activation':['identity' , 'logistic', 'tanh', 'relu'],
-               'mlpclassifier__alpha':[0.000001,0.0001,0.001,0.01, 1,10,100]}]
+               'mlpclassifier__alpha':[0.000001,0.0001,0.001,0.01, 1,10]}]
 #  param_grid = [{'mlpclassifier__hidden_layer_sizes':[3,5,[5,5],[5,5,5]],
 #                'mlpclassifier__activation':[ 'tanh', 'relu'],
 #                'mlpclassifier__alpha':[0.000001,0.00001]}]
