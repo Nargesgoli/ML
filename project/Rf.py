@@ -82,7 +82,7 @@ param_grid = [{
 #                'randomforestclassifier__n_estimators':[15,20,25,50,100,200,300],
 #                'randomforestclassifier__max_depth':[3,5,6,10,12,15,20,50,100],              
                'randomforestclassifier__max_features':[4,5,6,7,8,10,12,15,20,50,100],
-               'randomforestclassifier__max_leaf_nodes':[2,3,5,,10,20,50,100]}]
+               'randomforestclassifier__max_leaf_nodes':[2,3,5,10,20,50,100]}]
 gs = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='accuracy', cv=4, return_train_score=True,refit=True)
 gs = gs.fit(X_trainn, y_trainn)
 print("best score:", gs.best_score_) 
