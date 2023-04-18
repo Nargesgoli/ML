@@ -75,13 +75,14 @@ print("X_valid.shape:",X_valid.shape)
 # In[ ]:
 
 
-pipe_clf2 = make_pipeline(MinMaxScaler(), DecisionTreeClassifier()) 
-# param_range = [2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]
-param_grid = [{'decisiontreeclassifier__max_depth':[3,5,6,10,12,15,20,50,100],
-               'decisiontreeclassifier__max_features':[4,5,6,7,8,10,12,15,20,50,100],
-               'decisiontreeclassifier__max_leaf_nodes':[2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]}]
-gs = GridSearchCV(pipe_clf2, param_grid=param_grid, scoring='accuracy', cv=4, refit=True)
+pipe_clf5 = make_pipeline(MinMaxScaler(), SVC (random_state=0)) 
+# pipe_clf5 = make_pipeline(StandardScaler(), SVC) 
+param_range = [0.0001, 0.001, 0.01, 0.1, 1.0,5, 10.0, 100.0]
+param_grid = [{'svc__C': param_range, 'svc__kernel': ['linear']},
+              {'svc__C': param_range, 'svc__gamma': param_range, 'svc__kernel': ['rbf']}]
+gs = GridSearchCV(pipe_clf5, param_grid=param_grid, scoring='accuracy', cv=4, refit=True, return_train_score=True)
 gs = gs.fit(X_trainn, y_trainn)
-print(gs.best_score_) 
+print("Accuracy on validation set :",gs.best_score_) 
 print(gs.best_params_)
+
 
