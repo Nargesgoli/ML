@@ -90,5 +90,5 @@ scores5 = np.array(results5.mean_test_score).reshape(7, 7)
 mglearn.tools.heatmap(scores5, xlabel='svc__gamma',
     xticklabels=param_grid[0]['svc__gamma'],
     ylabel='svc__C', yticklabels=param_grid[0]['svc__C'], cmap="viridis")
-
+plt.show()
 
