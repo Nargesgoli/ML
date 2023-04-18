@@ -83,7 +83,7 @@ param_grid = [{
                'randomforestclassifier__max_depth':[3,5,6,10,12,15,20,50,100]}]           
 #                'randomforestclassifier__max_features':[4,5,6,7,8,10,12,15,20,50,100],
 #                'randomforestclassifier__max_leaf_nodes':[2,3,5,10,20,50,100]}]
-gs = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='F1_macro', cv=4, return_train_score=True,refit=True)
+gs = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='F1_Macro', cv=4, return_train_score=True,refit=True)
 gs = gs.fit(X_trainn, y_trainn)
 print("F1-score on validation set", gs.best_score_) 
 print(gs.best_params_)
