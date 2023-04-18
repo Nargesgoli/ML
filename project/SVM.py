@@ -79,8 +79,8 @@ print("X_valid.shape:",X_valid.shape)
 pipe_clf5 = make_pipeline(MinMaxScaler(), SVC (random_state=0)) 
 # pipe_clf5 = make_pipeline(StandardScaler(), SVC) 
 param_range = [0.0001, 0.001, 0.01, 0.1, 1.0,5, 10.0, 100.0]
-param_grid = [{'svc__C': param_range, 'svc__kernel': ['linear']},
-              {'svc__C': param_range, 'svc__gamma': param_range, 'svc__kernel': ['rbf']}]
+param_grid = [
+              {'svc__C': param_range, 'svc__gamma': param_range, 'svc__kernel': ['rbf', 'poly', 'sigmoid', 'precomputed']}]
 gs = GridSearchCV(pipe_clf5, param_grid=param_grid, scoring='accuracy', cv=4, refit=True, return_train_score=True)
 gs = gs.fit(X_trainn, y_trainn)
 print("Accuracy on validation set :",gs.best_score_) 
