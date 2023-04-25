@@ -40,7 +40,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import mglearn
+# import mglearn
 from scipy.special import comb
 import math
 from sklearn.base import BaseEstimator
