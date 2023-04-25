@@ -76,7 +76,7 @@ print("X_valid.shape:",X_valid.shape)
 # In[ ]:
 
 
-pipe_clf3 = make_pipeline(StandardScaler(), SVC (random_state=0)) 
+pipe_clf3 = make_pipeline(MinMaxScaler(), SVC (random_state=0)) 
 # pipe_clf3 = make_pipeline(StandardScaler(), SVC) 
 param_range = [0.001, 0.1, 1,5, 10.0,50,100]
 param_grid = [
