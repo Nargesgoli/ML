@@ -101,9 +101,9 @@ warnings.filterwarnings('ignore')
 
 
 import pandas as pd
-train_set = pd.read_csv("/Users/nrgsg/Desktop/courses/CSE-546/final project/VMMR_subset_images/train_features.csv", header=None)
+train_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_features.csv", header=None)
 x_train = np.array(train_set)
-validation_set = pd.read_csv("/Users/nrgsg/Desktop/courses/CSE-546/final project/VMMR_subset_images/train_data.csv", header=None)
+validation_set = pd.read_csv("/home/aimslab-server/Narges/ML/project/train_data.csv", header=None)
 Y_train = np.array(validation_set[list(validation_set.columns[-1:])])
 Y_train = np.array(Y_train).reshape((-1))
 X_trainval, X_test, y_trainval, y_test = train_test_split (x_train, Y_train, random_state=0) 
@@ -134,12 +134,13 @@ from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 
 #For the base classifier, we use decision tree (unpruned)
-# tree = DecisionTreeClassifier(criterion='entropy', 
-#                               max_depth=None,
-clf3 = SVC(gamma=0.1,C=5,kernel='rbf',
-                             random_state=1)
-tree=Pipeline([['sc', MinMaxScaler()],
-                  ['clf', clf3]])
+tree = DecisionTreeClassifier(criterion='entropy', 
+                              max_depth=None,
+                              random_state=1)
+# clf3 = SVC(gamma=0.1,C=5,kernel='rbf',
+#                              random_state=1)
+# tree=Pipeline([['sc', MinMaxScaler()],
+#                   ['clf', clf3]])
 bag = BaggingClassifier(base_estimator=tree,
                         n_estimators=2000, 
                         max_samples=1.0, #draw 100% of the number of samples (with replacement) for each
@@ -161,12 +162,8 @@ y_test_pred = tree.predict(X_test)
 
 tree_train = accuracy_score(y_train, y_train_pred)
 tree_test = accuracy_score(y_test, y_test_pred)
-print('SVM train/test accuracies %.3f/%.3f'
+print('Decision Tree train/test accuracies %.3f/%.3f'
       % (tree_train, tree_test))
-
-
-# In[13]:
-
 
 bag = bag.fit(X_train, y_train)
 y_train_pred = bag.predict(X_train)
@@ -181,79 +178,21 @@ print('Bagging train/test accuracies %.3f/%.3f'
 # In[74]:
 
 
-# Compare the decision regions between the decision tree and the bagging classifier
-
-
-# In[15]:
-
-
-# import numpy as np
-# import matplotlib.pyplot as plt
-
-# x_min = X_train[:, 0].min() - 1
-# x_max = X_train[:, 0].max() + 1
-# y_min = X_train[:, 1].min() - 1
-# y_max = X_train[:, 1].max() + 1
-
-# xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
-#                      np.arange(y_min, y_max, 0.1))
-
-# f, axarr = plt.subplots(nrows=1, ncols=2, 
-#                         sharex='col', 
-#                         sharey='row', 
-#                         figsize=(8, 3))
-
-
-# for idx, clf, tt in zip([0, 1],
-#                         [tree, bag],
-#                         ['Decision tree', 'Bagging']):
-#     clf.fit(X_train, y_train)
-
-#     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-#     Z = Z.reshape(xx.shape)
-
-#     axarr[idx].contourf(xx, yy, Z, alpha=0.3)
-#     axarr[idx].scatter(X_train[y_train == 0, 0],
-#                        X_train[y_train == 0, 1],
-#                        c='blue', marker='^')
-
-#     axarr[idx].scatter(X_train[y_train == 1, 0],
-#                        X_train[y_train == 1, 1],
-#                        c='green', marker='o')
-
-#     axarr[idx].set_title(tt)
-
-# axarr[0].set_ylabel('Alcohol', fontsize=12)
-
-# plt.tight_layout()
-# plt.text(0, -0.2,
-#          s='OD280/OD315 of diluted wines',
-#          ha='center',
-#          va='center',
-#          fontsize=12,
-#          transform=axarr[1].transAxes)
-
-# plt.show()
-
-
-# # Applying Boosting to classify examples in the Wine dataset
-
-# In[34]:
 
 
 from sklearn.ensemble import AdaBoostClassifier
 
-# tree = DecisionTreeClassifier(criterion='entropy', 
+tree = DecisionTreeClassifier(criterion='entropy', 
 #                               max_depth=1,
 #                               random_state=1)
-scaler=MinMaxScaler()
-scaler.fit(X_train)
-X_train_s=scaler.transform (X_train)
-X_test_s = scaler.transform (X_test)
-tree = SVC(gamma=0.1,C=5,kernel='rbf',
-                             random_state=1,
-                             probability=True,
-                            )
+# scaler=MinMaxScaler()
+# scaler.fit(X_train)
+# X_train_s=scaler.transform (X_train)
+# X_test_s = scaler.transform (X_test)
+# tree = SVC(gamma=0.1,C=5,kernel='rbf',
+#                              random_state=1,
+#                              probability=True,
+#                             )
 
 # tree = Pipeline([(MinMaxScaler(),('svc', SVC(kernel='rbf', degree=1, probability=True))])
 
@@ -266,13 +205,13 @@ ada = AdaBoostClassifier(base_estimator=tree,
 # In[39]:
 
 
-tree = tree.fit(X_train_s, y_train)
-y_train_pred = tree.predict(X_train_s)
-y_test_pred = tree.predict(X_test_s)
+tree = tree.fit(X_train, y_train)
+y_train_pred = tree.predict(X_train)
+y_test_pred = tree.predict(X_test)
 
 tree_train = accuracy_score(y_train, y_train_pred)
 tree_test = accuracy_score(y_test, y_test_pred)
-print('SVM train/test accuracies %.3f/%.3f'
+print('Decision train/test accuracies %.3f/%.3f'
       % (tree_train, tree_test))
 
 
@@ -289,59 +228,7 @@ print('AdaBoost train/test accuracies %.3f/%.3f'
       % (ada_train, ada_test))
 
 
-# In[84]:
 
-
-'''
-Attributes: ada.estimator_errors_,  ada.estimator_weights_, ...
-''' 
-
-
-# In[85]:
-
-
-# Compare the decision regions between the decision tree and the bagging classifier
-
-
-# In[86]:
-
-
-x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
-y_min, y_max = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
-xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
-                     np.arange(y_min, y_max, 0.1))
-
-f, axarr = plt.subplots(1, 2, sharex='col', sharey='row', figsize=(8, 3))
-
-
-for idx, clf, tt in zip([0, 1],
-                        [tree, ada],
-                        ['Decision tree', 'AdaBoost']):
-    clf.fit(X_train, y_train)
-
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-
-    axarr[idx].contourf(xx, yy, Z, alpha=0.3)
-    axarr[idx].scatter(X_train[y_train == 0, 0],
-                       X_train[y_train == 0, 1],
-                       c='blue', marker='^')
-    axarr[idx].scatter(X_train[y_train == 1, 0],
-                       X_train[y_train == 1, 1],
-                       c='green', marker='o')
-    axarr[idx].set_title(tt)
-
-axarr[0].set_ylabel('Alcohol', fontsize=12)
-
-plt.tight_layout()
-plt.text(0, -0.2,
-         s='OD280/OD315 of diluted wines',
-         ha='center',
-         va='center',
-         fontsize=12,
-         transform=axarr[1].transAxes)
-
-plt.show()
 
 
 # In[ ]:
