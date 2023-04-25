@@ -10,7 +10,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import mglearn
+# import mglearn
 from sklearn.metrics import make_scorer, roc_auc_score
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import classification_report
