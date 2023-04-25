@@ -80,12 +80,13 @@ pipe_clf4 = make_pipeline(MinMaxScaler(), MLPClassifier())
 # n_est = [2,3,4,5,6,10,15,20,30,50,60,70,80,90,100,1000]
 param_grid = [{'mlpclassifier__hidden_layer_sizes':[5,10,15,20,25,50,75,100,200,500,[3,3],[3,3,3],[5,5],[5,5,5],[10,10]],
 #                'mlpclassifier__activation':['identity' , 'logistic', 'tanh', 'relu'],
-               'mlpclassifier__alpha':[0.000001,0.0001,0.001,0.01, 1,10]}]
+               'mlpclassifier__alpha':[0.000001,0.0001,0.001,0.01, 1,10,100]}]
 #  param_grid = [{'mlpclassifier__hidden_layer_sizes':[3,5,[5,5],[5,5,5]],
 #                'mlpclassifier__activation':[ 'tanh', 'relu'],
 #                'mlpclassifier__alpha':[0.000001,0.00001]}]
-gs = GridSearchCV(pipe_clf4, param_grid=param_grid, scoring='accuracy', cv=4, refit=True)
+gs = GridSearchCV(pipe_clf4, param_grid=param_grid, scoring='f1_macro', cv=4, refit=True)
 gs = gs.fit(X_trainn, y_trainn)
+print("Accuracy on validation set: {:.3f}".format(np.round(100*np.mean(gs.best_score_),2)))
 print(gs.best_score_) 
 print(gs.best_params_)
 
