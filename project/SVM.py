@@ -80,10 +80,11 @@ pipe_clf3 = make_pipeline(StandardScaler(), SVC (random_state=0))
 # pipe_clf3 = make_pipeline(StandardScaler(), SVC) 
 param_range = [0.001, 0.1, 1,5, 10.0,50,100]
 param_grid = [
-              {'svc__C': [0.001,0.1,1,5,10,50,100,500,1000,2000], 'svc__gamma': [0.00001,0.0001,0.001,0.1,1,10,50], 'svc__kernel': ['rbf']}]
-gs3 = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='accuracy', cv=4, refit=True, return_train_score=True)
+              {'svc__C': [0.001,0.1,1,5,10,50,100,500,1000], 'svc__gamma': [0.00001,0.0001,0.001,0.1,1,10,50], 'svc__kernel': ['rbf']}]
+gs3 = GridSearchCV(pipe_clf3, param_grid=param_grid, scoring='roc_auc_ovo', cv=4, refit=True, return_train_score=True)
 gs3 = gs3.fit(X_trainn, y_trainn)
-print("Accuracy on validation set: {:.3f}".format(100*np.mean(gs3.best_score_),2))
+# print("Accuracy on validation set: {:.3f}".format(100*np.mean(gs3.best_score_),2))
+print("Accuracy on validation set: {:.3f}".format(np.round(100*np.mean(gs3.best_score_),2)))
 print(gs3.best_params_)
 print("Accuracy on validation set :",gs3.best_score_) 
 print(gs3.best_params_)
