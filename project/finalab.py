@@ -183,8 +183,8 @@ print('Bagging train/test accuracies %.3f/%.3f'
 from sklearn.ensemble import AdaBoostClassifier
 
 tree = DecisionTreeClassifier(criterion='entropy', 
-#                               max_depth=1,
-#                               random_state=1)
+                              max_depth=1,
+                              random_state=1)
 # scaler=MinMaxScaler()
 # scaler.fit(X_train)
 # X_train_s=scaler.transform (X_train)
